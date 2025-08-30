@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { list, detail, create, update, remove } from '../controllers/listingController.js';
+import { protect, requireRoles } from '../middleware/auth.js';
+const router = Router();
+router.get('/', list);
+router.get('/:id', detail);
+router.post('/', protect, requireRoles('seller', 'admin'), create);
+router.patch('/:id', protect, requireRoles('seller', 'admin'), update);
+router.delete('/:id', protect, requireRoles('seller', 'admin'), remove);
+export default router;
